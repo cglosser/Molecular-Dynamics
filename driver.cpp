@@ -1,18 +1,15 @@
 #include "particle.h"
 #include "interaction.h"
+#include "integrator.h"
 #include <iostream>
 using namespace std;
 
 int main() {
-    Interaction *pair = new HarmonicOscillator(3, 1);
-//  HarmonicOscillator HO(3,1);
-    Eigen::Vector3d v0(1,2,3);
+    HarmonicOscillator ho(3, 1);
+    vector<Particle> p;
+    p.push_back(Particle(Eigen::RowVector3d(0,0,0)));
 
-    for(double x = -10; x <= 10; x += 0.1) {
-        Eigen::RowVector3d r(0,0,x);
-        cout << x << "\t" << pair->potential(r) << endl;
-    }
-
+    VerletIntegrator(0.004, ho, p);
 
     return 0;
 }

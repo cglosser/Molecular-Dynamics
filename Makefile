@@ -1,6 +1,6 @@
 CC = g++
 COPTS = -Wall
-OBJECTS = particle.o driver.o interaction.o
+OBJECTS = particle.o driver.o interaction.o integrator.o
 
 simulation.exe: $(OBJECTS)
 	$(CC) $(COPTS) -o $@ $(OBJECTS)
