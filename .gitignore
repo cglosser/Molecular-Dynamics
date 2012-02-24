@@ -4,6 +4,10 @@
 # exclude patterns (uncomment them if you want to use them):
 # *.[oa]
 
+#Documentation folders
+html/*
+latex/*
+
 #Program files
 *.o
 *.out

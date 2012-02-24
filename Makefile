@@ -1,12 +1,17 @@
 CC = g++
 COPTS = -Wall
 OBJECTS = particle.o driver.o interaction.o integrator.o
+EIGENDIR = Eigen
 
 simulation.exe: $(OBJECTS)
-	$(CC) $(COPTS) -o $@ $(OBJECTS)
+	$(CC) -I $(EIGENDIR) $(COPTS) -o $@ $(OBJECTS)
 
 %.o:%.cpp
-	$(CC) $(COPTS) -c $<
+	$(CC) -I $(EIGENDIR) $(COPTS) -c $<
+
+.PHONY: documentation
+documentation:
+	doxygen Doxyfile
 
 .PHONY: clean
 clean:
