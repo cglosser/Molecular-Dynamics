@@ -1,7 +1,7 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-#include "Eigen/Dense"
+#include <Eigen/Dense>
 
 /**
  * \brief   Particle object for molecular dynamics simulation

@@ -1,9 +1,9 @@
 #ifndef INTERACTION_H
 #define INTERACTION_H
 
-#include "Eigen/Dense"
-#include "particle.h"
+#include <Eigen/Dense>
 #include <cmath>
+#include "particle.h"
 
 /**
  * \brief   Base class for particle interactions

@@ -11,7 +11,5 @@ int main() {
 
     VerletIntegrator v0(0.004, ho, p);
 
-    v0.runUpdates();
-
     return 0;
 }
