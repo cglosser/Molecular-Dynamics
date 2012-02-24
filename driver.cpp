@@ -9,7 +9,9 @@ int main() {
     vector<Particle> p;
     p.push_back(Particle(Eigen::RowVector3d(0,0,0)));
 
-    VerletIntegrator(0.004, ho, p);
+    VerletIntegrator v0(0.004, ho, p);
+
+    v0.runUpdates();
 
     return 0;
 }
