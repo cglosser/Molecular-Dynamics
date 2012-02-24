@@ -1,5 +1,5 @@
 CC = g++
-COPTS = -Wall -Ofast
+COPTS = -Wall
 OBJECTS = particle.o driver.o interaction.o integrator.o
 EIGENDIR = Eigen
 
