@@ -29,8 +29,8 @@ class Integrator {
      *          Integrators \endlink. Sets the Interaction to use for updating
      *          forces and the vector of \link Particle Particles\endlink via
      *          reference variables.
-     * \param &inter Referenced Interaction object used to compute forces
-     * \param &p0    Referenced vector of Particle instances to update over time
+     * \param &inter Referenced Interaction object used to compute updates 
+     * \param &p0    Referenced Particle vector to update
      */
     Integrator(Interaction &inter, std::vector<Particle> &p0) : _force(inter),
             _particles(p0) {
@@ -38,16 +38,21 @@ class Integrator {
     }
 };
 
+/**
+ * \brief   Base class for \link Integrator Integrators \endlink with fixed
+ *          timesteps
+ * \details Provides a constant _timestep variable for integration schemes
+ *          that require it (Euler, Verlet, RK4, etc.)
+ */
 class FixedTimestepIntegrator : public Integrator {
   protected:
     const double _timestep;//!< Constant timestep to use in all vector updates
   public:
     /**
-     * \brief   Base class for \link Integrator Integrators \endlink with fixed
-     *          timesteps
-     * \details Provides a constant _timestep variable for integration schemes
-     *          that require it (Euler, Verlet, RK4, etc.)
-     * \param dt Timestep
+     * \brief Default constructor
+     * \param dt     Timestep
+     * \param &inter Referenced Interaction instance used to compute updates
+     * \param &p0    Referenced Particle vector to update
      */
     FixedTimestepIntegrator(double dt, Interaction &inter,
             std::vector<Particle> &p0) : Integrator(inter, p0), _timestep(dt) {
@@ -70,6 +75,9 @@ class VerletIntegrator : public FixedTimestepIntegrator {
   public:
     /**
      * \brief   Default constructor
+     * \param dt     Timestep
+     * \param &inter Referenced Interaction instance used to compute updates
+     * \param &p0    Referenced Particle vector to update
      */
     VerletIntegrator(double dt, Interaction &inter, std::vector<Particle> &p0) 
             : FixedTimestepIntegrator(dt, inter, p0) {

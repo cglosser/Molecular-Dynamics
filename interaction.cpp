@@ -25,7 +25,7 @@ LennardJones::LennardJones(double eps, double sig) {
 /**
  * \brief Compute a Lennard-Jones force for a given separation
  * \param rvec Cartesian vector separation
- * \returns -del U evaluated at r = |rvec|
+ * \returns -(d/dr) U evaluated at |<b>rvec</b>|
  */
 Eigen::RowVector3d LennardJones::force(Eigen::RowVector3d rvec) const {
     double rsq = rvec.squaredNorm();
@@ -69,7 +69,7 @@ HarmonicOscillator::HarmonicOscillator(double r0, double strength) {
  * \brief   Compute a force vector from a HarmonicOscillator
  * \details Computes the force from a spherically-symmetric HarmonicOscillator.
  * \param rvec radial separation vector
- * \returns -k*(r-r0)
+ * \returns -k*(<b>r</b>-<b>r0</b>)
  */
 Eigen::RowVector3d HarmonicOscillator::force(Eigen::RowVector3d rvec) const {
     return -1*_springConstant*(rvec - _fundamentalLength*rvec.normalized());
@@ -79,6 +79,7 @@ Eigen::RowVector3d HarmonicOscillator::force(Eigen::RowVector3d rvec) const {
  * \brief Compute the value of a HarmonicOscillator potential at a given
  *        radius
  * \param rvec radial separation vector
+ * \returns 0.5*(r)^2
  */
 double HarmonicOscillator::potential(Eigen::RowVector3d rvec) const {
     double r = rvec.norm();
