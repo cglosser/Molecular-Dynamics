@@ -15,4 +15,4 @@ documentation:
 
 .PHONY: clean
 clean:
-	-rm *.o *.exe
+	-rm -rf *.o *.exe html latex
