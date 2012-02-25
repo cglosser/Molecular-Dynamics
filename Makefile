@@ -1,7 +1,7 @@
 CC = g++
 COPTS = -Wall
 OBJECTS = particle.o driver.o interaction.o integrator.o
-EIGENDIR = Eigen
+EIGENDIR = `pwd` #Assume Eigen/ in the top-level project folder
 
 simulation.exe: $(OBJECTS)
 	$(CC) -I $(EIGENDIR) $(COPTS) -o $@ $(OBJECTS)
