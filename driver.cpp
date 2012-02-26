@@ -5,11 +5,21 @@
 using namespace std;
 
 int main() {
-    HarmonicOscillator ho(3, 1);
-    vector<Particle> p;
-    p.push_back(Particle(Eigen::RowVector3d(0,0,0)));
+    Eigen::RowVector3d pos(0,0,0), vel(0,0,0), acc(1,0,0);
+    Particle p0(pos, vel, acc);
 
-    VerletIntegrator v0(0.004, ho, p);
+    vector<Particle> object;
+    object.push_back(p0);
+
+    LennardJones lj(1,1);
+
+    VerletIntegrator verlet(0.01, lj, object);
+
+
+    for(double time = 0; time < 10; time += 0.01) {
+        verlet.step();
+        cout << time << "\t" << object.at(0).position() << endl;
+    }
 
     return 0;
 }

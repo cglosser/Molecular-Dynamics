@@ -36,6 +36,8 @@ class Integrator {
             _particles(p0) {
         return;
     }
+
+    virtual void step() = 0;
 };
 
 /**
@@ -83,6 +85,9 @@ class VerletIntegrator : public FixedTimestepIntegrator {
             : FixedTimestepIntegrator(dt, inter, p0) {
         return;
     }
+
+    void step();
+
 };
 
 #endif
