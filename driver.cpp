@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    Eigen::RowVector3d p0(0,0,0), p1(1.2,0,0);
+    Eigen::RowVector3d p0(0,0,0), p1(1,0,0);
 
     vector<Particle> object;
     object.push_back(Particle(p0));
