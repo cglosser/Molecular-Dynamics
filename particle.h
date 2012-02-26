@@ -15,6 +15,7 @@ class Particle {
     Eigen::RowVector3d _pos, _vel, _acc;
     double _mass;
   public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     /*=====Constructors=====================================*/
     Particle();
     Particle(Eigen::RowVector3d);

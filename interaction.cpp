@@ -22,8 +22,8 @@ void Interaction::updateForces(vector<Particle> &particles) {
             Eigen::RowVector3d dij(j->position() - i->position());
             Eigen::RowVector3d fij = _force(dij);
 
-            i->setAcceleration(i->acceleration() + fij/i->mass());
-            j->setAcceleration(j->acceleration() - fij/j->mass());
+            i->setAcceleration(i->acceleration() - fij/i->mass());
+            j->setAcceleration(j->acceleration() + fij/j->mass());
         }
     }
     return;

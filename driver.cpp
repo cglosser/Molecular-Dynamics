@@ -5,20 +5,25 @@
 using namespace std;
 
 int main() {
-    Eigen::RowVector3d pos(0,0,0), vel(0,0,0), acc(1,0,0);
-    Particle p0(pos, vel, acc);
+    Eigen::RowVector3d p0(0,0,0), p1(1.2,0,0);
 
     vector<Particle> object;
-    object.push_back(p0);
+    object.push_back(Particle(p0));
+    object.push_back(Particle(p1));
 
     LennardJones lj(1,1);
 
-    VerletIntegrator verlet(0.01, lj, object);
+    VerletIntegrator verlet(0.004, lj, object);
 
 
-    for(double time = 0; time < 10; time += 0.01) {
-        verlet.step();
-        cout << time << "\t" << object.at(0).position() << endl;
+    for(double time = 0; time < 10; time += 0.004) {
+       cout << object.size() << endl;
+       cout << "Time: " << time << endl;
+       for(vector<Particle>::iterator p = object.begin(); p != object.end();
+               p++) {
+           cout << "Ar\t" << p->position() << endl;
+       }
+       verlet.step();
     }
 
     return 0;

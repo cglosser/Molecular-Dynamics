@@ -17,11 +17,10 @@
  */
 class Integrator {
   protected:
-    Interaction &_force; //!< Reference to Interaction used to update forces
-    std::vector<Particle> &_particles;  //!< Reference to the set of particles
-    virtual void _updatePositions()     = 0;
-    virtual void _updateVelocities()    = 0;
-    virtual void _updateAccelerations() = 0;
+    Interaction &_interaction; 
+    std::vector<Particle> &_particles;
+    virtual void _updatePositions()  = 0;
+    virtual void _updateVelocities() = 0;
   public:
     /**
      * \brief   Default Interaction constructor
@@ -32,8 +31,8 @@ class Integrator {
      * \param &inter Referenced Interaction object used to compute updates 
      * \param &p0    Referenced Particle vector to update
      */
-    Integrator(Interaction &inter, std::vector<Particle> &p0) : _force(inter),
-            _particles(p0) {
+    Integrator(Interaction &inter, std::vector<Particle> &p0) :
+            _interaction(inter), _particles(p0) {
         return;
     }
 
