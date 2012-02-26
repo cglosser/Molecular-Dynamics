@@ -3,6 +3,7 @@
 
 #include <Eigen/Dense>
 #include <cmath>
+#include <vector>
 #include "particle.h"
 
 /**
@@ -18,9 +19,11 @@
  *          accumulate these properly for every particle.
  */
 class Interaction {
+  protected:
+    virtual Eigen::RowVector3d _force(Eigen::RowVector3d) const = 0;
+    virtual double _potential(Eigen::RowVector3d) const = 0;
   public:
-    virtual Eigen::RowVector3d force(Eigen::RowVector3d) const = 0;
-    virtual double potential(Eigen::RowVector3d) const = 0;
+    void updateForces(std::vector<Particle> &);
 };
 
 /**
@@ -31,14 +34,14 @@ class Interaction {
  */
 class LennardJones : public Interaction {
   private:
-    double _epsilon, //Depth of the potential well
-           _sigma;   //Lennard-Jones radius (x-intercept of the well)
+    double _epsilon, //!< Depth of the potential well
+           _sigma;   //!< Lennard-Jones radius (x-intercept of the well)
+  protected:
+    Eigen::RowVector3d _force(Eigen::RowVector3d) const;
+    double _potential(Eigen::RowVector3d) const;
   public:
     LennardJones();
     LennardJones(double, double);
-
-    Eigen::RowVector3d force(Eigen::RowVector3d) const;
-    double potential(Eigen::RowVector3d) const;
 };
 
 /**
@@ -50,13 +53,13 @@ class LennardJones : public Interaction {
 class HarmonicOscillator : public Interaction {
   private:
     double _springConstant,
-           _fundamentalLength; //Zero point of the HO potential
+           _fundamentalLength; //!< Zero point of the HO potential
+  protected: 
+    Eigen::RowVector3d _force(Eigen::RowVector3d) const;
+    double _potential(Eigen::RowVector3d) const;
   public:
     HarmonicOscillator();
     HarmonicOscillator(double, double);
-
-    Eigen::RowVector3d force(Eigen::RowVector3d) const;
-    double potential(Eigen::RowVector3d) const;
 };
 
 #endif
