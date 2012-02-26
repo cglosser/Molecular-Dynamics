@@ -2,7 +2,15 @@
 using namespace std;
 typedef vector<Particle>::iterator particleIterator;
 
-
+/**
+ * \brief   Update all pairwise forces
+ * \details Use a triangular loop (forces equal but opposite) to zero,
+ *          calculate, and accumulate the force on a referenced set of
+ *          particles. Currently runs over every pair, will eventually require
+ *          Particle objects to carry a list of appropriate interacting
+ *          neighbors (for bonding potentials like the HarmonicOscillator).
+ * \param &particles Referenced set of particles to update.
+ */
 void Interaction::updateForces(vector<Particle> &particles) {
     const Eigen::RowVector3d zero(0,0,0);
     for(particleIterator i = particles.begin(); i != particles.end(); i++) {
