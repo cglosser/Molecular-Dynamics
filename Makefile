@@ -1,10 +1,10 @@
 CC = g++
-COPTS = -Wall
-OBJECTS = particle.o driver.o interaction.o integrator.o
+COPTS = -Wall -O3 -fstrict-aliasing
+OBJECTS = particle.o interaction.o integrator.o
 EIGENDIR = `pwd` #Assume Eigen/ in the top-level project folder
 
-simulation.exe: $(OBJECTS)
-	$(CC) -I $(EIGENDIR) $(COPTS) -o $@ $(OBJECTS)
+simulation.exe: driver.cpp $(OBJECTS)
+	$(CC) -I $(EIGENDIR) $(COPTS) -o $@ $< $(OBJECTS)
 
 %.o:%.cpp
 	$(CC) -I $(EIGENDIR) $(COPTS) -c $<
