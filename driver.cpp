@@ -27,17 +27,10 @@ int main() {
     LennardJones lj(1,1);
     VerletIntegrator verlet(0.004);
 
-    fstream output("positions.xyz", fstream::out);
+    Universe u0(object, lj, verlet);
+    u0.simulate(20);
 
-    for(double time = 0; time < 10; time += 0.004) {
-       output << object.size() << endl;
-       output << "Time: " << time << endl;
-       for(vector<Particle>::iterator p = object.begin(); p != object.end();
-               p++) {
-           output << "Ar\t" << p->position() << endl;
-       }
-       verlet.step(object, lj);
-    }
+
 
     return 0;
 }
