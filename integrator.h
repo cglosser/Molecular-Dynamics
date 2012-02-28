@@ -59,6 +59,12 @@ class FixedTimestepIntegrator : public Integrator {
             std::vector<Particle> &p0) : Integrator(inter, p0), _timestep(dt) {
         return;
     }
+
+    /**
+     * \brief   Timestep accessor
+     * \returns _timestep value
+     */
+    double timestep() const {return _timestep;}
 };
 
 /**
