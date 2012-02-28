@@ -1,8 +1,8 @@
-#include "particle.h"
-#include "interaction.h"
-#include "integrator.h"
 #include <iostream>
 #include <fstream>
+
+#include "universe.h"
+
 using namespace std;
 
 int main() {
@@ -21,12 +21,11 @@ int main() {
 
     for(vector<Particle>::iterator p = object.begin(); p != object.end();
             p++) {
-          p->setPosition(p->position()*2);
+          p->setPosition(p->position()*1.5874);
     }
 
     LennardJones lj(1,1);
-
-    VerletIntegrator verlet(0.004, lj, object);
+    VerletIntegrator verlet(0.004);
 
     fstream output("positions.xyz", fstream::out);
 
@@ -37,7 +36,7 @@ int main() {
                p++) {
            output << "Ar\t" << p->position() << endl;
        }
-       verlet.step();
+       verlet.step(object, lj);
     }
 
     return 0;

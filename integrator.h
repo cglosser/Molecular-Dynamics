@@ -11,32 +11,17 @@
  *          of particles.
  * \details Implements integration algorithms to update all
  *          positions/velocities/accelerations of a std::vector of Particle
- *          instances. Both the Interaction and the vector of \link Particle
- *          Particles \endlink exist at the end of reference variables
- *          contained within the Integrator.
+ *          instances. To preserve encapsulation, methods that update \link
+ *          Particle Particles\endlink in time acccept reference parameters to
+ *          an appropriate vector and Interaction. 
  */
 class Integrator {
   protected:
-    Interaction &_interaction; 
-    std::vector<Particle> &_particles;
-    virtual void _updatePositions()  = 0;
-    virtual void _updateVelocities() = 0;
+    virtual void _updatePositions(std::vector<Particle> &)  = 0;
+    virtual void _updateVelocities(std::vector<Particle> &) = 0;
   public:
-    /**
-     * \brief   Default Interaction constructor
-     * \details Fundamental constructor for \link Integrator
-     *          Integrators \endlink. Sets the Interaction to use for updating
-     *          forces and the vector of \link Particle Particles\endlink via
-     *          reference variables.
-     * \param &inter Referenced Interaction object used to compute updates 
-     * \param &p0    Referenced Particle vector to update
-     */
-    Integrator(Interaction &inter, std::vector<Particle> &p0) :
-            _interaction(inter), _particles(p0) {
-        return;
-    }
 
-    virtual void step() = 0;
+    virtual void step(std::vector<Particle> &, Interaction &) = 0;
 };
 
 /**
@@ -50,15 +35,10 @@ class FixedTimestepIntegrator : public Integrator {
     const double _timestep;//!< Constant timestep to use in all vector updates
   public:
     /**
-     * \brief Default constructor
-     * \param dt     Timestep
-     * \param &inter Referenced Interaction instance used to compute updates
-     * \param &p0    Referenced Particle vector to update
+     * \brief Value constructor
+     * \param dt Timestep
      */
-    FixedTimestepIntegrator(double dt, Interaction &inter,
-            std::vector<Particle> &p0) : Integrator(inter, p0), _timestep(dt) {
-        return;
-    }
+    FixedTimestepIntegrator(double dt) : _timestep(dt) {return;}
 
     /**
      * \brief   Timestep accessor
@@ -76,9 +56,8 @@ class FixedTimestepIntegrator : public Integrator {
  */
 class VerletIntegrator : public FixedTimestepIntegrator {
   protected:
-    void _updatePositions();
-    void _updateVelocities();
-    void _updateAccelerations();
+    void _updatePositions(std::vector<Particle> &);
+    void _updateVelocities(std::vector<Particle> &);
   public:
     /**
      * \brief   Default constructor
@@ -86,13 +65,8 @@ class VerletIntegrator : public FixedTimestepIntegrator {
      * \param &inter Referenced Interaction instance used to compute updates
      * \param &p0    Referenced Particle vector to update
      */
-    VerletIntegrator(double dt, Interaction &inter, std::vector<Particle> &p0) 
-            : FixedTimestepIntegrator(dt, inter, p0) {
-        return;
-    }
-
-    void step();
-
+    VerletIntegrator(double dt) : FixedTimestepIntegrator(dt) {return;}
+    void step(std::vector<Particle> &, Interaction &);
 };
 
 #endif
