@@ -1,6 +1,20 @@
 #include "universe.h"
+#include <boost/progress.hpp>
 
+/**
+ * \brief   Simulate the universe (set of particles) to a specified time.
+ * \details Updates particle trajectories until a specified amount of
+ *          (simulated) time has elapsed. Because timesteps might not evenly
+ *          divide the specified total system time, the simulation may run
+ *          <it>slightly</it> longer than requested. Also writes trajectories
+ *          in an XYZ format to "positions.xyz" and prints a progress bar on
+ *          stdout.
+ */
 void Universe::simulate(double timeMax) {
+    std::cout << "Percent complete:";
+    boost::progress_display progress(timeMax/_integrator.timestep(),
+            std::cout);
+
     std::fstream coords("positions.xyz", std::fstream::out);
     for(double time = 0; time < timeMax; time += _integrator.timestep()) {
         _integrator.step(_particles, _interaction);
@@ -10,6 +24,7 @@ void Universe::simulate(double timeMax) {
                 _particles.end(); p++) {
             coords << "Ar\t" << (p->position()) << std::endl;
         }
+        ++progress; //update display
     }
     return;
 }
