@@ -1,5 +1,4 @@
 #include "universe.h"
-#include <boost/progress.hpp>
 
 /**
  * \brief   Simulate the universe (set of particles) to a specified time.
@@ -11,10 +10,6 @@
  *          stdout.
  */
 void Universe::simulate(double timeMax) {
-    std::cout << "Percent complete:";
-    boost::progress_display progress(timeMax/_integrator.timestep(),
-            std::cout);
-
     std::fstream coords("positions.xyz", std::fstream::out);
     for(double time = 0; time < timeMax; time += _integrator.timestep()) {
         _integrator.step(_particles, _interaction);
@@ -24,7 +19,6 @@ void Universe::simulate(double timeMax) {
                 _particles.end(); p++) {
             coords << "Ar\t" << (p->position()) << std::endl;
         }
-        ++progress; //update display
     }
     return;
 }
