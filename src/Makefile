@@ -1,5 +1,5 @@
 CC = g++
-COPTS = -Wall -O3 -fstrict-aliasing
+COPTS = -Wall -O3 -fstrict-aliasing -std=c++0x
 OBJECTS = particle.o interaction.o integrator.o universe.o
 EIGENDIR = `pwd` #Assume Eigen/ in the top-level project folder
 

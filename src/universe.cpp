@@ -15,9 +15,8 @@ void Universe::simulate(double timeMax) {
         _integrator.step(_particles, _interaction);
         coords << _particles.size() << std::endl;
         coords << "Time: " << time << std::endl;
-        for(std::vector<Particle>::iterator p = _particles.begin(); p !=
-                _particles.end(); p++) {
-            coords << "Ar\t" << (p->position()) << std::endl;
+        for(auto p : _particles) {
+            coords << "Ar\t" << (p.position()) << std::endl;
         }
     }
     return;

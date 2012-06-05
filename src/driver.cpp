@@ -19,9 +19,9 @@ int main() {
         }
     }
 
-    for(vector<Particle>::iterator p = object.begin(); p != object.end();
-            p++) {
-          p->setPosition(p->position()*1.5874);
+    const double initialSpacing = 1.5874;
+    for(auto &p : object) {
+      p.setPosition(p.position()*initialSpacing);
     }
 
     LennardJones lj(1,1);
@@ -29,8 +29,6 @@ int main() {
 
     Universe u0(object, lj, verlet);
     u0.simulate(20);
-
-
 
     return 0;
 }

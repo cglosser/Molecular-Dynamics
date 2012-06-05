@@ -13,8 +13,8 @@ typedef vector<Particle>::iterator particleIterator;
  */
 void Interaction::updateForces(vector<Particle> &particles) {
     const Eigen::RowVector3d zero(0,0,0);
-    for(particleIterator i = particles.begin(); i != particles.end(); i++) {
-        i->setAcceleration(zero);
+    for(auto &i : particles) {
+        i.setAcceleration(zero);
     }
 
     for(particleIterator i = particles.begin(); i != particles.end()-1; i++) {

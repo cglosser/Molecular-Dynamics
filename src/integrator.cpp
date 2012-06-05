@@ -9,8 +9,8 @@ typedef std::vector< particleIterator >::iterator doubleParticleIterator;
  */
 void VerletIntegrator::_updatePositions(std::vector<Particle> &particles) {
     particleIterator p0;
-    for(p0 = particles.begin(); p0 != particles.end(); p0++) {
-        p0->setPosition(p0->position() + p0->velocity()*_timestep);
+    for(auto &p0 : particles) {
+        p0.setPosition(p0.position() + p0.velocity()*_timestep);
     }
     return;
 }
@@ -23,8 +23,8 @@ void VerletIntegrator::_updatePositions(std::vector<Particle> &particles) {
  */
 void VerletIntegrator::_updateVelocities(std::vector<Particle> &particles) {
     particleIterator p0;
-    for(p0 = particles.begin(); p0 != particles.end(); p0++) {
-        p0->setVelocity(p0->velocity() + 0.5*p0->acceleration()*_timestep);
+    for(auto &p0 : particles) {
+        p0.setVelocity(p0.velocity() + 0.5*p0.acceleration()*_timestep);
     }
     return;
 }
