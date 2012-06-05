@@ -4,9 +4,9 @@
  * \brief   Update particle positions with a second order Taylor approximation:
  *          x(t + dt) = x(t) + v(t)*dt + 0.5*a(t)*dt^2
  */
-void VerletIntegrator::_updatePositions(std::vector<Particle> &particles) {
+void VerletIntegrator::updatePositions_(std::vector<Particle> &particles) {
     for(auto &p0 : particles) {
-        p0.setPosition(p0.position() + p0.velocity()*_timestep);
+        p0.setPosition(p0.position() + p0.velocity()*timestep_);
     }
     return;
 }
@@ -17,9 +17,9 @@ void VerletIntegrator::_updatePositions(std::vector<Particle> &particles) {
  * \details The half-step velocity update gets called twice: initially, and
  *          after calculation of the (t + dt) forces.
  */
-void VerletIntegrator::_updateVelocities(std::vector<Particle> &particles) {
+void VerletIntegrator::updateVelocities_(std::vector<Particle> &particles) {
     for(auto &p0 : particles) {
-        p0.setVelocity(p0.velocity() + 0.5*p0.acceleration()*_timestep);
+        p0.setVelocity(p0.velocity() + 0.5*p0.acceleration()*timestep_);
     }
     return;
 }
@@ -29,9 +29,9 @@ void VerletIntegrator::_updateVelocities(std::vector<Particle> &particles) {
  */
 void VerletIntegrator::step(std::vector<Particle> &particles, Interaction
         &interaction) {
-    _updateVelocities(particles);
-    _updatePositions(particles);
+    updateVelocities_(particles);
+    updatePositions_(particles);
     interaction.updateForces(particles);
-    _updateVelocities(particles);
+    updateVelocities_(particles);
     return;
 }

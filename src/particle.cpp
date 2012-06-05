@@ -8,8 +8,8 @@ using namespace std;
  * \details Sets all vectors to zero, mass to 1.
  */
 Particle::Particle() {
-    _pos = _vel = _acc = Eigen::RowVector3d(0,0,0);
-    _mass = 1.0;
+    pos_ = vel_ = acc_ = Eigen::RowVector3d(0,0,0);
+    mass_ = 1.0;
 
     return;
 }
@@ -21,9 +21,9 @@ Particle::Particle() {
  * \param position Vector object to assign to position
  */
 Particle::Particle(Eigen::RowVector3d position) {
-    _pos = position;
-    _vel = _acc = Eigen::RowVector3d(0,0,0);
-    _mass = 1.0;
+    pos_ = position;
+    vel_ = acc_ = Eigen::RowVector3d(0,0,0);
+    mass_ = 1.0;
 
     return;
 }
@@ -36,9 +36,9 @@ Particle::Particle(Eigen::RowVector3d position) {
  * \param mass     Particle mass
  */
 Particle::Particle(Eigen::RowVector3d position, double mass) {
-    _pos = position;
-    _vel = _acc = Eigen::RowVector3d(0,0,0);
-    _mass = mass;
+    pos_ = position;
+    vel_ = acc_ = Eigen::RowVector3d(0,0,0);
+    mass_ = mass;
 
     return;
 }
@@ -52,10 +52,10 @@ Particle::Particle(Eigen::RowVector3d position, double mass) {
  */
 Particle::Particle(Eigen::RowVector3d position, Eigen::RowVector3d velocity, 
         Eigen::RowVector3d acceleration) {
-    _pos = position;
-    _vel = velocity;
-    _acc = acceleration;
-    _mass = 1.0;
+    pos_ = position;
+    vel_ = velocity;
+    acc_ = acceleration;
+    mass_ = 1.0;
 
     return;
 }
@@ -70,10 +70,10 @@ Particle::Particle(Eigen::RowVector3d position, Eigen::RowVector3d velocity,
  */
 Particle::Particle(Eigen::RowVector3d position, Eigen::RowVector3d velocity, 
         Eigen::RowVector3d acceleration, double mass) {
-    _pos = position;
-    _vel = velocity;
-    _acc = acceleration;
-    _mass = mass;
+    pos_ = position;
+    vel_ = velocity;
+    acc_ = acceleration;
+    mass_ = mass;
 
     return;
 }
@@ -84,7 +84,7 @@ Particle::Particle(Eigen::RowVector3d position, Eigen::RowVector3d velocity,
  * Position mutator
  */
 void Particle::setPosition(Eigen::RowVector3d position) {
-    _pos = position;
+    pos_ = position;
 
     return;
 }
@@ -93,7 +93,7 @@ void Particle::setPosition(Eigen::RowVector3d position) {
  * Velocity mutator
  */
 void Particle::setVelocity(Eigen::RowVector3d velocity) {
-    _vel = velocity;
+    vel_ = velocity;
 
     return;
 }
@@ -102,7 +102,7 @@ void Particle::setVelocity(Eigen::RowVector3d velocity) {
  * Acceleration mutator
  */
 void Particle::setAcceleration(Eigen::RowVector3d acceleration) {
-    _acc = acceleration;
+    acc_ = acceleration;
 
     return;
 }
@@ -111,7 +111,7 @@ void Particle::setAcceleration(Eigen::RowVector3d acceleration) {
  * Mass mutator
  */
 void Particle::setMass(double mass) {
-    _mass = mass;
+    mass_ = mass;
 
     return;
 }
@@ -122,26 +122,26 @@ void Particle::setMass(double mass) {
  * Position accessor
  */
 Eigen::RowVector3d Particle::position() const {
-    return _pos;
+    return pos_;
 }
 
 /**
  * Velocity accessor
  */
 Eigen::RowVector3d Particle::velocity() const {
-    return _vel;
+    return vel_;
 }
 
 /**
  * Acceleration accessor
  */
 Eigen::RowVector3d Particle::acceleration() const {
-    return _acc;
+    return acc_;
 }
 
 /**
  * Mass accessor
  */
 double Particle::mass() const {
-    return _mass;
+    return mass_;
 }

@@ -17,8 +17,8 @@
  */
 class Integrator {
   protected:
-    virtual void _updatePositions(std::vector<Particle> &)  = 0;
-    virtual void _updateVelocities(std::vector<Particle> &) = 0;
+    virtual void updatePositions_(std::vector<Particle> &)  = 0;
+    virtual void updateVelocities_(std::vector<Particle> &) = 0;
   public:
 
     virtual void step(std::vector<Particle> &, Interaction &) = 0;
@@ -32,19 +32,19 @@ class Integrator {
  */
 class FixedTimestepIntegrator : public Integrator {
   protected:
-    const double _timestep;//!< Constant timestep to use in all vector updates
+    const double timestep_;//!< Constant timestep to use in all vector updates
   public:
     /**
      * \brief Value constructor
      * \param dt Timestep
      */
-    FixedTimestepIntegrator(double dt) : _timestep(dt) {return;}
+    FixedTimestepIntegrator(double dt) : timestep_(dt) {return;}
 
     /**
      * \brief   Timestep accessor
      * \returns _timestep value
      */
-    double timestep() const {return _timestep;}
+    double timestep() const {return timestep_;}
 };
 
 /**
@@ -56,8 +56,8 @@ class FixedTimestepIntegrator : public Integrator {
  */
 class VerletIntegrator : public FixedTimestepIntegrator {
   protected:
-    void _updatePositions(std::vector<Particle> &);
-    void _updateVelocities(std::vector<Particle> &);
+    void updatePositions_(std::vector<Particle> &);
+    void updateVelocities_(std::vector<Particle> &);
   public:
     /**
      * \brief   Default constructor

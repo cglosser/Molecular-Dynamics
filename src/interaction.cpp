@@ -21,7 +21,7 @@ void Interaction::updateForces(vector<Particle> &particles) {
     for(particleIterator i = particles.begin(); i != particles.end()-1; i++) {
         for(particleIterator j = i + 1; j != particles.end(); j++) {
             Eigen::RowVector3d dij(j->position() - i->position());
-            Eigen::RowVector3d fij = _force(dij);
+            Eigen::RowVector3d fij = force_(dij);
 
             i->setAcceleration(i->acceleration() - fij/i->mass());
             j->setAcceleration(j->acceleration() + fij/j->mass());
@@ -35,7 +35,7 @@ void Interaction::updateForces(vector<Particle> &particles) {
  * \details Set potential depth and LJ radius to 1 (LJ units)
  */
 LennardJones::LennardJones() {
-    _epsilon = _sigma = 1.0;
+    epsilon_ = sigma_ = 1.0;
     return;
 }
 
@@ -46,8 +46,8 @@ LennardJones::LennardJones() {
  * \param sig Lennard-Jones radius (x-intercept of the potential)
  */
 LennardJones::LennardJones(double eps, double sig) {
-    _epsilon = eps;
-    _sigma   = sig;
+    epsilon_ = eps;
+    sigma_   = sig;
     return;
 }
 
@@ -56,10 +56,10 @@ LennardJones::LennardJones(double eps, double sig) {
  * \param rvec Cartesian vector separation
  * \returns -(d/dr) U evaluated at |<b>rvec</b>|
  */
-Eigen::RowVector3d LennardJones::_force(Eigen::RowVector3d &rvec) const {
+Eigen::RowVector3d LennardJones::force_(Eigen::RowVector3d &rvec) const {
     double rsq = rvec.squaredNorm();
-    return 4*_epsilon*(12*pow(_sigma,12)/pow(rsq,7) -
-                        6*pow(_sigma,6)/pow(rsq,4))*rvec;
+    return 4*epsilon_*(12*pow(sigma_,12)/pow(rsq,7) -
+                        6*pow(sigma_,6)/pow(rsq,4))*rvec;
 }
 
 /**
@@ -67,9 +67,9 @@ Eigen::RowVector3d LennardJones::_force(Eigen::RowVector3d &rvec) const {
  * \param rvec Cartesian vector separation
  * \returns 4*epsilon*((sigma/r)^12 - (sigma/r)^6)
  */
-double LennardJones::_potential(Eigen::RowVector3d &rvec) const {
+double LennardJones::potential_(Eigen::RowVector3d &rvec) const {
     double dist = rvec.norm();
-    return 4*_epsilon*(pow(_sigma/dist,12) - pow(_sigma/dist,6));
+    return 4*epsilon_*(pow(sigma_/dist,12) - pow(sigma_/dist,6));
 }
 
 /**
@@ -78,8 +78,8 @@ double LennardJones::_potential(Eigen::RowVector3d &rvec) const {
  *          of zero.
  */
 HarmonicOscillator::HarmonicOscillator() {
-    _springConstant    = 1;
-    _fundamentalLength = 0;
+    springConstant_    = 1;
+    fundamentalLength_ = 0;
     return;
 }
 
@@ -90,8 +90,8 @@ HarmonicOscillator::HarmonicOscillator() {
  * \param strength spring constant
  */
 HarmonicOscillator::HarmonicOscillator(double r0, double strength) {
-    _fundamentalLength = r0;
-    _springConstant    = strength;
+    fundamentalLength_ = r0;
+    springConstant_    = strength;
     return;
 }
 
@@ -101,8 +101,8 @@ HarmonicOscillator::HarmonicOscillator(double r0, double strength) {
  * \param rvec radial separation vector
  * \returns -k*(<b>r</b>-<b>r0</b>)
  */
-Eigen::RowVector3d HarmonicOscillator::_force(Eigen::RowVector3d &rvec) const {
-    return -1*_springConstant*(rvec - _fundamentalLength*rvec.normalized());
+Eigen::RowVector3d HarmonicOscillator::force_(Eigen::RowVector3d &rvec) const {
+    return -1*springConstant_*(rvec - fundamentalLength_*rvec.normalized());
 }
 
 /**
@@ -111,7 +111,7 @@ Eigen::RowVector3d HarmonicOscillator::_force(Eigen::RowVector3d &rvec) const {
  * \param rvec radial separation vector
  * \returns 0.5*(r)^2
  */
-double HarmonicOscillator::_potential(Eigen::RowVector3d &rvec) const {
+double HarmonicOscillator::potential_(Eigen::RowVector3d &rvec) const {
     double r = rvec.norm();
-    return 0.5*_springConstant*pow(_fundamentalLength - r, 2);
+    return 0.5*springConstant_*pow(fundamentalLength_ - r, 2);
 }
