@@ -1,5 +1,6 @@
 #include "interaction.h"
 using namespace std;
+
 typedef vector<Particle>::iterator particleIterator;
 
 /**

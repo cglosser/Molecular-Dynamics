@@ -1,14 +1,10 @@
 #include "integrator.h"
 
-typedef std::vector<Particle>::iterator particleIterator;
-typedef std::vector< particleIterator >::iterator doubleParticleIterator;
-
 /**
  * \brief   Update particle positions with a second order Taylor approximation:
  *          x(t + dt) = x(t) + v(t)*dt + 0.5*a(t)*dt^2
  */
 void VerletIntegrator::_updatePositions(std::vector<Particle> &particles) {
-    particleIterator p0;
     for(auto &p0 : particles) {
         p0.setPosition(p0.position() + p0.velocity()*_timestep);
     }
@@ -22,7 +18,6 @@ void VerletIntegrator::_updatePositions(std::vector<Particle> &particles) {
  *          after calculation of the (t + dt) forces.
  */
 void VerletIntegrator::_updateVelocities(std::vector<Particle> &particles) {
-    particleIterator p0;
     for(auto &p0 : particles) {
         p0.setVelocity(p0.velocity() + 0.5*p0.acceleration()*_timestep);
     }
