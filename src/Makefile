@@ -3,8 +3,9 @@ CFLAGS = -Wall -O3 -fstrict-aliasing -std=c++0x
 CFLAGS += $(shell pkg-config --cflags eigen3)
 LDFLAGS =
 OBJECTS = driver.o particle.o interaction.o integrator.o universe.o
+PROGRAM = simulation.exe
 
-simulation.exe: $(OBJECTS)
+$(PROGRAM): $(OBJECTS)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 %.o:%.cpp
